@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Library_Management.Models.Data;
 
-public partial class Book
+public partial class BookList
 {
-    public Guid Id { get; set; }
+    public Guid BookId { get; set; }
 
     public string? Title { get; set; }
 
@@ -17,7 +17,13 @@ public partial class Book
 
     public DateTime? PublishedDate { get; set; }
 
-    public virtual ICollection<BookCopy> BookCopies { get; set; } = new List<BookCopy>();
+    public string? CoverImageUrl { get; set; }
 
-    public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
+    public string? AuthorName { get; set; }
+
+    public string? AuthorProfileImageUrl { get; set; }
+
+    public int TotalCopies { get; set; }
+
+    public int AvailableCopies { get; set; }
 }

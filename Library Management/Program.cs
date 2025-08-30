@@ -1,4 +1,5 @@
 using Library_Management.Data;
+using Library_Management.Models.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,9 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<BookDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Configure DbContext to use SQL Server with the connection string from appsettings.json
+builder.Services.AddDbContext<BookDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
-//builder.Services.AddScoped<IBookService, BookService>();
+// Register the IBookService and DbBookService for dependency injection.
 builder.Services.AddScoped<IBookService, DbBookService>();
 
 var app = builder.Build();
@@ -28,6 +32,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+// Configure routing for the controller.
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Book}/{action=Index}/{id?}");

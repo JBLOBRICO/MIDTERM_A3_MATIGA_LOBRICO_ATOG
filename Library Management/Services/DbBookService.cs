@@ -3,12 +3,14 @@ using Library_Management.Models;
 
 public class DbBookService : IBookService
 {
-    private readonly BookDbContext _bookdBContext;
 
-    public DbBookService(BookDbContext context)
+    private readonly BookDbContext _BookDbContext;
+
+    public DbBookService(BookDbContext bookDbContext)
     {
-        _bookdBContext = context;
+        _BookDbContext = bookDbContext;
     }
+
 
     public void AddBook(AddBookViewModel book)
     {
@@ -27,13 +29,12 @@ public class DbBookService : IBookService
 
     public IEnumerable<BookListViewModel> GetBooks()
     {
-        return _bookdBContext.Books.Select(b => new BookListViewModel
+        return _BookDbContext.BookLists.Select(b => new BookListViewModel
         {
-            BookId = b.Id,
+            BookId = b.BookId,
             Title = b.Title,
             Genre = b.Genre,
-            PublishedDate = b.PublishedDate,
-           
+            PublishedDate = b.PublishedDate
         }).ToList();
     }
 
